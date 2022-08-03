@@ -1,0 +1,31 @@
+{
+    "team": [
+        {
+            "name": "Ruchira Tharaka",
+            "email": "e18354@eng.pdn.ac.lk",
+            "eNumber": "E/18/354"
+        },
+        {
+            "name": "Piyumali Sandunika",
+            "email": "e18318@eng.pdn.ac.lk",
+            "eNumber": "E/18/318"
+        },
+        {
+            "name": "Chamara Dilshan",
+            "email": "e18327@eng.pdn.ac.lk",
+            "eNumber": "E/18/327"
+        }
+    ],
+    "supervisors": [
+        {
+            "name": "Nuwan Jaliyagoda",
+            "email": "nuwanjaliyagoda@eng.pdn.ac.lk"
+        },
+        {
+            "name": "Dilshani Karunarathna",
+            "email": "dilshanik@eng.pdn.ac.lk"
+        }
+    ],
+        
+    "tags": ["Web-based Application", "Interactive Map"]
+}

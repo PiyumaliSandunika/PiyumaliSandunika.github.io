@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="x-icon" href="images/icon.png">
+    <title>Ground Floor</title>   <!--Name of the website -->
+    <link rel="stylesheet" href="style.css"/>   <!--Linking the css file-->
+</head>
+<body>
+    <script src="./js/three.js"></script>            <!-- Importing the three.js library-->
+    <script src="./js/jquery.js"></script>           <!-- Importing the jquery.js library-->
+    <script src="./js/threex.domevents.js"></script> <!-- Importing the threex.domevents.js library-->
+    <script src="./js/GLTFLoader.js"></script>       <!-- Importing the GLTFLoader.js library-->
+    <div id="glass" class="glass" onmouseover="nowin()" onmouseleave="nowout()"></div>
+    <img src="images/logo.png">
+    <div class="controlLayoutColoured"></div>    <!--This is an invisible layout which used to sense mouse activities on the label-->
+    <div id="information" class="information_class" >                    
+        <div id ="main_information" class="main_information_class">                         <!--Top right main information label-->
+            <div id="label" class="label1_class">Room Name</div>
+            <ul id="list" class="list_class" style="list-style-image: url(images/bullet2.png); font-size: 2.15vmin;">                                   <!--Top right main information list-->
+                <li>list item 1</li>
+                <li>list item 2</li>
+                <li>list item 3</li>
+            </ul>
+        </div>
+        <div id="hint" class="hint_class">Click on the blue panel for more details</div>
+        <div id="more_information" class="more_information_class">                          <!--Top right more information label-->
+            <p2 id="label2" class="label2_class">More information here</p2>          
+            <ul id="list2" class="list2_class" style="list-style-image: url(images/bullet2.png);">                                             <!--Top right more information list-->
+                <li>list item 1</li>
+                <li>list item 2</li>
+                <li>list item 3</li>
+            </ul>
+            <div class="line"></div>
+        </div>
+    </div>
+    
+    <div id="latterPanel" class="latterPanelClass">
+        <div id="link" class="link_class">
+            <div id="linkHead" class="linkHead_class">Link</div>
+            <div class="url_class">
+                <a href="http://www.ce.pdn.ac.lk/" id="url" target="_blank">Click here for more info</a>
+            </div>
+        </div>
+        <div id ="navigator" class="navigate_class">                         <!--Top right main information label-->
+            <div id="searchBar" class="searchBar">
+                <input id="searchQueryInput" class="searchQueryInput_class" type="text" name="searchQueryInput" placeholder="Search" value="" />
+                <button id="searchQuerydelete" class="searchQuerydelete_class" type="submit" name="searchQuerydelete" onclick="deleteInput()">
+                    <svg width="3vmin" height="3vmin" viewBox="0 0 24 24">
+                        <path fill="#1A5276" d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z" fill="currentColor"/>
+                    </svg>
+                </button>
+                <button id="searchQuerySubmit" class="searchQuerySubmit_class" type="submit" name="searchQuerySubmit" onclick="findData()">
+                  <svg style="width:3.4vmin;height:3.4vmin" viewBox="0 0 24 24"><path fill="#666666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                  </svg>
+                </button>
+            </div>
+            <div id="roomListContainer" class="roomListContainer_class">
+                <div id="roomList" class="roomList_class">
+                    <div id="navigatingItem1" class="items" onclick="showPath(0)">Department Office</div>
+                    <div id="navigatingItem2" class="items" onclick="showPath(1)">HoD's Office</div>
+                    <div id="navigatingItem3" class="items" onclick="showPath(2)">Conference Room</div>
+                    <div id="navigatingItem4" class="items" onclick="showPath(3)">Central Lobby</div>
+                    <div id="navigatingItem5" class="items" onclick="showPath(4)">Filing Room & Storage</div>
+                    <div id="navigatingItem6" class="items" onclick="showPath(5)">Staff Common Room 1</div>
+                    <div id="navigatingItem7" class="items" onclick="showPath(6)">Staff Common Room 2</div>
+                    <div id="navigatingItem8" class="items" onclick="showPath(7)">Open Lab 1</div>
+                    <div id="navigatingItem9" class="items" onclick="showPath(8)">Open Lab 2</div>
+                    <div id="navigatingItem10" class="items" onclick="showPath(9)">Gents Washroom</div>
+                    <div id="navigatingItem11" class="items" onclick="showPath(10)">Ladies Washroom</div>
+                    <div id="navigatingItem12" class="items" onclick="showPath(11)">Open lab Entry Lobby</div>
+                    <div id="navigatingItem13" class="items" onclick="showPath(12)">Corridor</div>
+                    <div id="navigatingItem14" class="items" onclick="showPath(13)">Lift</div>
+                    <div id="navigatingItem15" class="items" onclick="showPath(14)">Operator-room</div>
+                    <div id="navigatingItem16" class="items" onclick="showPath(15)">Entrance Lobby</div>
+                </div>
+            </div>
+        </div>
+        <div id="label3" class="label3_class">Navigator</div>
+    </div>
+    <div id="controlLayout" class="controlLayout_class" onmouseover="showInformation()" onmouseout="hideInformation()"></div>    <!--This is an invisible layout which used to sense mouse activities on the label-->
+    <div id="dashboard" class="dashboard_class">
+        <button class="changeCorners_class" id="changeCorners" onclick="changeCorners()">Square Corners</button>
+        <button id="buttonControlswitch" class="buttonControlswitch_class" onclick="activeButtons()">
+            <svg width="2.8vmin" height="2.8vmin" viewBox="1 2 22 18" fill="none">
+                <path d="M16.9451 5.05518C15.8405 5.05518 14.9451 5.95061 14.9451 7.05518C14.9451 8.15975 15.8405 9.05518 16.9451 9.05518C18.0496 9.05518 18.9451 8.15975 18.9451 7.05518C18.9451 5.95061 18.0496 5.05518 16.9451 5.05518Z" fill="currentColor"/>
+                <path d="M14.9451 16.8921C14.9451 15.7875 15.8405 14.8921 16.9451 14.8921C18.0496 14.8921 18.9451 15.7875 18.9451 16.8921C18.9451 17.9967 18.0496 18.8921 16.9451 18.8921C15.8405 18.8921 14.9451 17.9967 14.9451 16.8921Z" fill="currentColor"/>
+                <path d="M7.05518 14.8921C5.95061 14.8921 5.05518 15.7875 5.05518 16.8921C5.05518 17.9967 5.95061 18.8921 7.05518 18.8921C8.15975 18.8921 9.05518 17.9967 9.05518 16.8921C9.05518 15.7875 8.15975 14.8921 7.05518 14.8921Z" fill="currentColor"/>
+                <path d="M5.05518 7.05518C5.05518 5.95061 5.95061 5.05518 7.05518 5.05518C8.15975 5.05518 9.05518 5.95061 9.05518 7.05518C9.05518 8.15975 8.15975 9.05518 7.05518 9.05518C5.95061 9.05518 5.05518 8.15975 5.05518 7.05518Z" fill="currentColor"/>
+                <path d="M16.9451 9.97363C15.8405 9.97363 14.9451 10.8691 14.9451 11.9736C14.9451 13.0782 15.8405 13.9736 16.9451 13.9736C18.0496 13.9736 18.9451 13.0782 18.9451 11.9736C18.9451 10.8691 18.0496 9.97363 16.9451 9.97363Z" fill="currentColor"/>
+                <path d="M5.05518 11.9736C5.05518 10.8691 5.95061 9.97363 7.05518 9.97363C8.15975 9.97363 9.05518 10.8691 9.05518 11.9736C9.05518 13.0782 8.15975 13.9736 7.05518 13.9736C5.95061 13.9736 5.05518 13.0782 5.05518 11.9736Z" fill="currentColor"/></svg>
+            </button>
+        <button id="contactus_button" class="contactus_button_class" onclick="showDetails()">
+            <svg width="2.2vmin" height="2.2vmin" viewBox="1 2 22 18" fill="none"><path d="M2 10V5C2 4.44775 2.44772 4 3 4H8C8.55228 4 9 4.44775 9 5V9C9 9.55225 8.55228 10 8 10H6C6 14.4182 9.58173 18 14 18V16C14 15.4478 14.4477 15 15 15H19C19.5523 15 20 15.4478 20 16V21C20 21.5522 19.5523 22 19 22H14C7.37259 22 2 16.6274 2 10Z" fill="currentColor"/></svg>
+        </button>
+        <button id="assets" class="assets_class" onclick="ImportAssets('https\:\/\/raw.githubusercontent.com/cepdnaclk/e18-co227-Interactive-Department-Map-GroupA/main/assets/G_Assets.gltf',-5,0,-80,0,3.28084)">ASSETS</button>
+        <div id="otherpages" class="otherpages_class">
+            <div style="font-size: 1.2vmin; color:white; padding-left: 0.8vmin; padding-right: 0; width: 17%; margin-top: 1.2vmin;">FLOOR</div>
+            <button id="page" class="pagebutton_class">G</button>
+            <button id="page" class="pagebutton_class" style="border: none;" onclick="redirecttoPage(1)">1</button>
+            <button id="page" class="pagebutton_class" style="border: none;" onclick="redirecttoPage(2)">2</button>
+            <button id="page" class="pagebutton_class" style="border: none;" onclick="redirecttoPage(3)">3</button>
+            <button id="page" class="pagebutton_class" style="border: none;" onclick="redirecttoPage(4)">4</button>
+        </div>
+        <div class="viewsButtonClass" id="viewsButton">
+            <button class="leftTopButtonClass" id="leftTopButton" onclick="leftTop()">BIRD</button>
+            <button class="leftBottomButtonClass" id="leftBottomButton" onclick="leftBottom()">DRONE</button>
+            <button class="RightButtonClass" id="RightButton"><p3 id="rightTop" class="rightTopClass">W</p3><br><p4 id="rightBottom" class="rightBottomClass">WALK</p4></button> 
+        </div>
+    </div>
+    <button id="left" class="left_class" onclick="buttonControls(1)">LEFT</button>
+    <button id="right" class="right_class" onclick="buttonControls(2)">RIGHT</button>
+    <button id="up" class="up_class" onclick="buttonControls(3)">UP</button>
+    <button id="down" class="down_class" onclick="buttonControls(4)">DOWN</button>
+    <button id="front" class="front_class" onclick="buttonControls(5)">FRONT</button>
+    <button id="back" class="back_class" onclick="buttonControls(6)">BACK</button>
+    <div id="aim" class="aim"></div>
+    <div id="glass1" class="glass" style="opacity: 0.6; display:flex;"></div>
+    <div id="waiting" class="waiting_class"><strong>Loading...</strong></div>
+    <div id="contactus" class="contactus_class">
+        <div style="color: #239B56; font-size: 4vmin; padding-left: 3vmin; padding-top: 2vmin;"><strong>Contact us</strong></div>
+        <div id="contactus_close" class="contactus_close_class" name="contactus_close" color="#28B463" onclick="hideDetails()">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+                <path fill="#1A5276" d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z" fill="currentColor"/>
+            </svg>
+        </div>
+        <div id="name1" class="name1_class" style="display: flex;" onclick="redirecttoAccount(1)"><svg width="6vmin" height="5.5vmin" viewBox="3 3 20 20"><path fill-rule="evenodd" clip-rule="evenodd"d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z" fill="#117A65"/>
+        </svg><div><div class="name">MR. NUWAN JALIYAGODA</div><div class="mail">nuwanjaliyagoda@eng.pdn.ac.lk</div></div></div>
+        <div id="name1" class="name2_class" style="display: flex;" onclick="redirecttoAccount(2)"><svg width="6vmin" height="5.5vmin" viewBox="3 3 20 20"><path fill-rule="evenodd" clip-rule="evenodd"d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z" fill="#117A65"/>
+        </svg><div><div class="name">MS. PIYUMALI SANDUNIKA</div><div class="mail">e18318@eng.pdn.ac.lk</div></div></div>
+        <div id="name1" class="name3_class" style="display: flex;" onclick="redirecttoAccount(3)"><svg width="6vmin" height="5.5vmin" viewBox="3 3 20 20"><path fill-rule="evenodd" clip-rule="evenodd"d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z" fill="#117A65"/>
+        </svg><div><div class="name">MR. CHAMARA DILSHAN</div><div class="mail">e18327@eng.pdn.ac.lk</div></div></div>
+        <div id="name1" class="name4_class" style="display: flex;" onclick="redirecttoAccount(4)"><svg width="6vmin" height="5.5vmin" viewBox="3 3 20 20"><path fill-rule="evenodd" clip-rule="evenodd"d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z" fill="#117A65"/>
+        </svg><div><div class="name">MR. RUCHIRA THARAKA</div><div class="mail">e18354@eng.pdn.ac.lk</div></div></div>
+    </div>
+    <script type="text/javascript"> 
+       
+//Database
+        //This database is used to load the information about the buildings
+        var my_json={};   
+        loadBuildings();
+                   
+        function loadBuildings(){     
+               
+            var xhr = new XMLHttpRequest();		//create XHR object
+            xhr.open('GET','json/Gdata.json',true);
+       
+            xhr.onload = function(){
+                if(this.status==200){       
+                    my_json = JSON.parse(this.responseText);   //added wrapper such that values of the objects can be accessed
+                    //console.log(my_json);		
+                    roomInfo(defaultID);       			//Set initial information should be appeared in the panels
+                    animate();
+                    checkURL();
+                }else{
+                    alert("File not found..!! Check the database file name or URL and try again !! ");	//when there's an error in accessing the json file
+                }
+            }
+            xhr.onerror = function(){
+            console.log('Request Error occured!!');			//when there's an issue with the network level
+            }
+            xhr.send();
+        }
+               
+        var clicked = 0;                //To check whether a building has been clicked or not
+        var expanding = 0;              //To check if top right labels are expanding or not
+        var expanded = 0;               //To check whether top right main label has been expanded or not
+        var circleCorners = 1;          //To flag whether layouts have circle corners or square corners (circle(1)-default)
+        var out = 1;                    //To check whether mouse pointer is on threejs scene or on the panel
+        var X = 0.52,Y=0.7,R=0.9,S=0.08;    //X- length of front,back boxes, Y- thickness of transparent walls,R- gap between camera and front/back boxes,  
+        var initialCamera_X = 0, initialCamera_Y = -3.2, initialCamera_Z = -75.2;     //Coordinates of the camera at the initial point
+        var initialBirdY=-20,initialBirdZ=-45;          ////Coordinates of the camera at the initial point in the bird view
+        var initialCamera_Xangle = -Math.PI/2;          //Rotation of the camera around x axis at the initial point
+        var yR = R, zR = 0;         //The gap between front,back boxes along y and z axes
+        var angle_x= initialCamera_Xangle, angle_y=0;                //Starting rotation values of the camera
+        var idNUM = 22;     //Number of ids
+        var doorHeight=-1.72, panelHeight = 3.85, wallHeight=-0.7, barHeight=-4.95;     //Height of the doors,panels,walls and the bars should be set
+        var barNUM = 25;    //Number of navigating bars
+        var defaultID=21;    //This is the id of the default information should be shown
+        var activebuttons = 0;      //This indicates whether button controls are active or not
+
+
+        //Navigating bars, ids and the names of the rooms
+        var buildingIDList = [["Department Office",1,[1,2,3,4]],["HoD's Office",2,[1,2,3,4,5]],["Conference Room",3,[1,2,3,6,8,9]],["Central Lobby",4,[1,2,3,6,8,10]],["Filing Room & Storage",5,[1,2,3,6,8,10,12,13]],["Staff Common Room 1",6,[1,2,3,6,8,10,12,14,15,16,17]],["Staff Common Room 2",7,[1,2,3,6,8,10,12,14,15,16,18]],["Open Lab 1",8,[1,2,3,6,8,10,12,14]],["Open Lab 2",9,[1,2,3,6,8,10,12,14,15,19,23]],["Gents Washroom",10,[1,2,3,6,8,10,12,14,15,19,20,22]],["Ladies Washroom",11,[1,2,3,6,8,10,12,14,15,19,20,21]],["Open lab Entry Lobby",12,[1,2,3,6,8,10,12,14,15,19,23,24]],["Corridor",18,[1,2,3,6,8,10,12,14,15,16]],["Lift",19,[1,2,3,6,8,10,11]],["Operator-room",20,[1,2,3,6,7]],["Entrance Lobby",21,[1]]];
+        //List of navigating items in the navigating panel
+        var navigatingItemList = ["navigatingItem1","navigatingItem2","navigatingItem3","navigatingItem4","navigatingItem5","navigatingItem6","navigatingItem7","navigatingItem8","navigatingItem9","navigatingItem10","navigatingItem11","navigatingItem12","navigatingItem13","navigatingItem14","navigatingItem15","navigatingItem16"];
+        
+    </script>
+    <script src="commonContent.js"></script>
+    <script type="text/javascript">
+
+
+        // var blenderBuilding = importObject('./floors/FloorG.gltf',-5,0,-80,0,3.28084);  
+        var blenderBuilding = importObject('https://raw.githubusercontent.com/cepdnaclk/e18-co227-Interactive-Department-Map-GroupA/main/floors/FloorG.gltf',-5,0,-80,0,3.28084);  
+        
+
+        //Creating transparent objects by using the created function above
+        var G01_door1 = createTransparentObject(1,"v",-11.15,-68.63);//
+        var G01_door2 = createTransparentObject(1,"v",-19.25,-69.45);
+
+        var G02_door1 = createTransparentObject(2,"v",-19.03,-69.45);
+        var G02_door2 = createTransparentObject(2,"h",-23.74,-67.78);
+
+        var G03_door1 = createTransparentObject(3,"v",-11.15,-61.9);
+        var G03_door2 = createTransparentObject(3,"h",-23.74,-68);
+
+        var G04_door1 = createTransparentObject(4,"h",-17.35,-39.98);
+        var G04_door2 = createTransparentObject(4,"v",-21.2,-51.6);
+        var G04_door3 = createTransparentObject(4,"h",-8.43,-57.7);
+        var G04_door4 = createTransparentObject(4,"h",-2.65,-58.3);
+
+        var G05_door1 = createTransparentObject(5,"v",-20.95,-51.6);
+
+        var G06_door1 = createTransparentObject(6,"h",-23.7,-30);
+
+        var G07_door1 = createTransparentObject(7,"h",-23.89,-19.83);
+
+        var G08_door1 = createTransparentObject(8,"h",-2.6,-25.08);//
+        var G08_door2 = createTransparentObject(8,"h",-7.2,-25.08);//
+        var G08_door3 = createTransparentObject(8,"h",-16.51,-25);
+        var G08_door4 = createTransparentObject(8,"v",-21.2,-27.6);
+        var G08_door5 = createTransparentObject(8,"h",-17.35,-40.20);
+
+        var G09_door1 = createTransparentObject(9,"v",-9.71,-12.43);
+        var G09_door2 = createTransparentObject(9,"v",-21.2,-22.3);
+        var G09_door3 = createTransparentObject(9,"h",-16.51,-25.22);
+
+        var G10_door1 = createTransparentObject(10,"th",-1.33,-19.78);
+        var G10_door2 = createTransparentObject(10,"th",-3.55,-19.78);
+        var G10_door3 = createTransparentObject(10,"h",-2.6,-25.3);//
+        
+        var G11_door1 = createTransparentObject(11,"th",-6.12,-19.78);
+        var G11_door2 = createTransparentObject(11,"th",-8.68,-19.78);
+        var G11_door3 = createTransparentObject(11,"h",-7.2,-25.3);//
+        
+        var G12_door1 = createTransparentObject(12,"h",-2.65,-10.15);
+        var G12_door2 = createTransparentObject(12,"v",-9.93,-12.43);
+
+        var G13_door1 = createTransparentObject(13,"th",-1.33,-20);
+        var G14_door2 = createTransparentObject(14,"th",-3.55,-20);
+        var G15_door3 = createTransparentObject(15,"th",-6.12,-20);
+        var G16_door4 = createTransparentObject(16,"th",-8.68,-20);
+
+        var G17_door1 = createTransparentObject(17,"v",-0.32,-75.11);
+        var G17_door2 = createTransparentObject(17,"h",-2.65,-10.37);
+
+        var G18_door1 = createTransparentObject(18,"v",-20.98,-27.6);
+        var G18_door2 = createTransparentObject(18,"v",-20.98,-22.3);
+        var G18_door3 = createTransparentObject(18,"h",-23.89,-19.61);
+        var G18_door4 = createTransparentObject(18,"h",-23.7,-30.22);
+
+        var G19_door1 = createTransparentObject(19,"h",-2.65,-57.3);
+
+        var G20_door1 = createTransparentObject(20,"v",-6.29,-67.7);
+
+        var G21_door1 = createTransparentObject(21,"v",-0.1,-75.11);
+        var G21_door2 = createTransparentObject(21,"v",-6.07,-67.7);
+        var G21_door3 = createTransparentObject(21,"h",-8.43,-57.48);
+        var G21_door4 = createTransparentObject(21,"v",-11.37,-61.9);
+        var G21_door5 = createTransparentObject(21,"v",-11.37,-68.63);
+
+
+        var PanelsList = [];
+        var idsOfPanelList = [];
+
+        var panel01_1BB = createTransparentPanel(1,7.63,13.56,-15.34,-72.785);      PanelsList.push(panel01_1BB);  
+        
+        var panel02_1BB = createTransparentPanel(2,2.64,13.63,-20.595,-72.785);     PanelsList.push(panel02_1BB);  
+        var panel02_2BB = createTransparentPanel(2,8.7,11.63,-26.265,-73.785);      PanelsList.push(panel02_2BB);  
+        
+        var panel03_1BB = createTransparentPanel(3,8.6,12.55,-26.265,-61.495);      PanelsList.push(panel03_1BB);  
+        var panel03_2BB = createTransparentPanel(3,10.57,10.46,-16.68,-60.53);      PanelsList.push(panel03_2BB);  
+        
+        var panel04_1BB = createTransparentPanel(4,10.56,2.6,-5.68,-56.25);         PanelsList.push(panel04_1BB);  
+        var panel04_2BB = createTransparentPanel(4,20.47,14.69,-10.635,-47.605);    PanelsList.push(panel04_2BB);
+
+        var panel05_1BB = createTransparentPanel(5,9.31,14.6,-25.944,-47.56);       PanelsList.push(panel05_1BB);
+
+        var panel06_1BB = createTransparentPanel(6,9.31,9.27,-25.944,-35.22);       PanelsList.push(panel06_1BB);
+        var panel06_2BB = createTransparentPanel(6,4.31,4.97,-28.444,-28.1);        PanelsList.push(panel06_2BB);
+
+        var panel07_1BB = createTransparentPanel(7,9.31,9.44,-25.944,-15.12);       PanelsList.push(panel07_1BB);
+        var panel07_2BB = createTransparentPanel(7,4.31,5.38,-28.444,-22.525);      PanelsList.push(panel07_2BB);
+
+        var panel08_1BB = createTransparentPanel(8,20.47,14.805,-10.635,-32.7);     PanelsList.push(panel08_1BB);
+        
+        var panel09_1BB = createTransparentPanel(9,11,14.55,-15.5,-17.6);           PanelsList.push(panel09_1BB);
+
+        var panel10_1BB = createTransparentPanel(10,4.4,4.975,-2.59,-22.53);        PanelsList.push(panel10_1BB);
+        
+        var panel11_1BB = createTransparentPanel(11,4.56,4.975,-7.27,-22.53);       PanelsList.push(panel11_1BB);
+    
+        var panel12_1BB = createTransparentPanel(12,9.2,4.23,-5,-12.5);             PanelsList.push(panel12_1BB);
+
+        var panel13_1BB = createTransparentPanel(13,1.9,4.8,-1.34,-17.44);          PanelsList.push(panel13_1BB);
+
+        var panel14_1BB = createTransparentPanel(14,2.3,4.8,-3.65,-17.44);          PanelsList.push(panel14_1BB);
+
+        var panel15_1BB = createTransparentPanel(15,2.3,4.8,-6.15,-17.44);          PanelsList.push(panel15_1BB);
+
+        var panel16_1BB = createTransparentPanel(16,2.1,4.8,-8.55,-17.44);          PanelsList.push(panel16_1BB);
+
+        var panel18_1BB = createTransparentPanel(18,4.6,9.967,-23.59,-25.22);       PanelsList.push(panel18_1BB);
+        
+        var panel19_1BB = createTransparentPanel(19,5.6,7,-3.2,-61.47);             PanelsList.push(panel19_1BB);
+        
+        var panel20_1BB = createTransparentPanel(20,5.6,4.6,-3.2,-67.67);           PanelsList.push(panel20_1BB);
+       
+        var panel21_1BB = createTransparentPanel(21,10.75,9.2,-5.775,-75);          PanelsList.push(panel21_1BB);
+        var panel21_2BB = createTransparentPanel(21,4.8,12.8,-8.67,-64);            PanelsList.push(panel21_2BB);
+
+        
+        var transparentWallsList = [];
+
+        var cubeV1BB = createWall(Y,63.3,-0.2,-41.65);  transparentWallsList.push(cubeV1BB);
+        var cubeV2BB = createWall(Y,3.04,-0.2,-78.46);  transparentWallsList.push(cubeV2BB);
+        var cubeV3BB = createWall(Y,70,-30.8,-45);      transparentWallsList.push(cubeV3BB);
+        var cubeV4BB = createWall(Y,2,-22,-67);         transparentWallsList.push(cubeV4BB);
+        var cubeV5BB = createWall(Y,2,-19.2,-66.8);     transparentWallsList.push(cubeV5BB);
+        var cubeV6BB = createWall(Y,9,-19.2,-75.5);     transparentWallsList.push(cubeV6BB);
+        var cubeV7BB = createWall(Y,9.8,-11.2,-75.2);   transparentWallsList.push(cubeV7BB);
+        var cubeV8BB = createWall(Y,3.4,-11.2,-65.25);  transparentWallsList.push(cubeV8BB);
+        var cubeV9BB = createWall(Y,5.3,-11.2,-57.6);   transparentWallsList.push(cubeV9BB);
+        var cubeV10BB = createWall(Y,8.6,-6.1,-61.7);   transparentWallsList.push(cubeV10BB);
+        var cubeV11BB = createWall(Y,1.6,-21.1,-54);    transparentWallsList.push(cubeV11BB);
+        var cubeV12BB = createWall(Y,21,-21.1,-39.5);   transparentWallsList.push(cubeV12BB);
+        var cubeV13BB = createWall(Y,2.1,-21.1,-25);    transparentWallsList.push(cubeV13BB);
+        var cubeV14BB = createWall(Y,10.8,-21.1,-15.4); transparentWallsList.push(cubeV14BB);
+        var cubeV15BB = createWall(Y,11,-26,-25.2);     transparentWallsList.push(cubeV15BB);
+        //var cubeV16BB = createWall(Y,1,-12.9,-19.8);    transparentWallsList.push(cubeV16BB);
+       // var cubeV17BB = createWall(Y,5.5,-12.9,-13.2);  transparentWallsList.push(cubeV17BB);
+        var cubeV18BB = createWall(Y,0.8,-9.8,-10.3);   transparentWallsList.push(cubeV18BB);
+        var cubeV19BB = createWall(Y,11.3,-9.8,-19.75); transparentWallsList.push(cubeV19BB);
+        var cubeV20BB = createWall(Y,10.5,-4.9,-20);    transparentWallsList.push(cubeV20BB);
+        var cubeV21BB = createWall(Y,5,-2.45,-17.5);    transparentWallsList.push(cubeV21BB);
+        var cubeV22BB = createWall(Y,5,-7.45,-17.5);    transparentWallsList.push(cubeV22BB);
+        var cubeV23BB = createWall(Y,9,-3.6,-47);       transparentWallsList.push(cubeV23BB);
+        var cubeV24BB = createWall(Y,9,-7.5,-44);       transparentWallsList.push(cubeV24BB);
+
+        var cubeH1BB = createWall(1,Y,-0.5,-10.2);      transparentWallsList.push(cubeH1BB);
+        var cubeH2BB = createWall(27,Y,-17.5,-10.2);    transparentWallsList.push(cubeH2BB);
+        var cubeH3BB = createWall(15.7,Y,-7.85,-40.2);  transparentWallsList.push(cubeH3BB);
+        var cubeH4BB = createWall(12,Y,-25,-40.2);      transparentWallsList.push(cubeH4BB);
+        var cubeH5BB = createWall(1,Y,-0.5,-25.1);      transparentWallsList.push(cubeH5BB);
+        var cubeH6BB = createWall(1.6,Y,-4.95,-25.1);   transparentWallsList.push(cubeH6BB);
+        var cubeH7BB = createWall(6,Y,-11.85,-25.1);    transparentWallsList.push(cubeH7BB);
+        var cubeH8BB = createWall(2.8,Y,-19.5,-25.1);   transparentWallsList.push(cubeH8BB);
+        var cubeH9BB = createWall(5,Y,-28.5,-25.4);     transparentWallsList.push(cubeH9BB);
+        var cubeH10BB = createWall(10,Y,-5,-14.9);      transparentWallsList.push(cubeH10BB);
+        //var cubeH11BB = createWall(9.4,Y,-17.5,-20);    transparentWallsList.push(cubeH11BB);
+        var cubeH12BB = createWall(1,Y,-21.5,-30.4);    transparentWallsList.push(cubeH12BB);
+        var cubeH13BB = createWall(20,Y,-21,-55.1);     transparentWallsList.push(cubeH13BB);
+        var cubeH14BB = createWall(1,Y,-0.5,-57.8);     transparentWallsList.push(cubeH14BB);
+        var cubeH15BB = createWall(2.5,Y,-5.6,-57.8);   transparentWallsList.push(cubeH15BB);
+        var cubeH16BB = createWall(1,Y,-10.5,-57.8);    transparentWallsList.push(cubeH16BB);
+        var cubeH17BB = createWall(11,Y,-16.5,-65.8);   transparentWallsList.push(cubeH17BB);
+        var cubeH18BB = createWall(6,Y,-3,-65.1);       transparentWallsList.push(cubeH18BB);
+        var cubeH19BB = createWall(6.5,Y,-3.25,-70.2);  transparentWallsList.push(cubeH19BB);
+        var cubeH20BB = createWall(5.5,Y,-28.25,-67.9); transparentWallsList.push(cubeH20BB);
+       // var cubeH21BB = createWall(1.6,Y,-22.8,-67.9);  transparentWallsList.push(cubeH21BB);
+        var cubeH22BB = createWall(31,Y,-15.5,-79.8);   transparentWallsList.push(cubeH22BB);
+        var cubeH23BB = createWall(4,Y,-2,-51.5);       transparentWallsList.push(cubeH23BB);
+        var cubeH24BB = createWall(3,Y,-5.7,-44);       transparentWallsList.push(cubeH24BB);
+
+        var bar1 = createNavigatingBars(1,"H",0.4,-3.2,-75.2);
+        var bar2 = createNavigatingBars(2,"H",5.2,-6,-75.2);
+        var bar3 = createNavigatingBars(3,"V",6.8,-8.4,-71.5);
+        var bar4 = createNavigatingBars(4,"H",3.8,-10.5,-68.4);
+        var bar5 = createNavigatingBars(5,"H",4,-14.4,-68.4);
+        var bar6 = createNavigatingBars(5,"V",1,-16.2,-69.2);
+        var bar7 = createNavigatingBars(5,"H",4,-18.4,-69.4);
+        var bar8 = createNavigatingBars(6,"V",0.8,-8.4,-67.7);
+        var bar9 = createNavigatingBars(7,"H",3.2,-6.6,-67.6);
+        var bar10 = createNavigatingBars(8,"V",5.8,-8.4,-64.4);
+        var bar11 = createNavigatingBars(9,"H",3.8,-10.5,-61.8);
+        var bar12 = createNavigatingBars(10,"V",6.1,-8.4,-58.45);
+        var bar13 = createNavigatingBars(11,"H",5.7,-5.35,-55.7);
+        var bar14 = createNavigatingBars(11,"V",3,-2.7,-57.5);
+        var bar15 = createNavigatingBars(12,"V",4.2,-8.4,-53.3);
+        var bar16 = createNavigatingBars(12,"H",9,-13.1,-51.5);
+        var bar17 = createNavigatingBars(13,"H",5,-20.1,-51.5);
+        var bar18 = createNavigatingBars(14,"V",13,-17.4,-44.7);
+        var bar19 = createNavigatingBars(15,"V",11,-17.4,-32.7);
+        var bar20 = createNavigatingBars(16,"H",6.4,-20.8,-27.5);
+        var bar21 = createNavigatingBars(17,"V",4,-23.8,-29.8);
+        var bar22 = createNavigatingBars(18,"V",9,-23.8,-22.7);
+        var bar23 = createNavigatingBars(19,"H",0.8,-16.8,-27.5);
+        var bar24 = createNavigatingBars(20,"H",9.5,-11.65,-27.5);
+        var bar25 = createNavigatingBars(21,"V",3.6,-7.1,-25.4);
+        var bar26 = createNavigatingBars(22,"H",4.4,-4.7,-27.5);
+        var bar27 = createNavigatingBars(22,"V",3.6,-2.7,-25.4);
+        var bar28 = createNavigatingBars(23,"V",3.6,-16.6,-25.4);
+        var bar29 = createNavigatingBars(24,"V",11.6,-16.6,-17.8);
+        var bar30 = createNavigatingBars(24,"H",7.8,-12.5,-12.3);
+
+        //Set lights by using the created function above
+
+        var light01 = setPointLight(3,5,-5);
+        var light01 = setPointLight(3,5,-13);
+        var light02 = setPointLight(3,5,-18);
+        var light03 = setPointLight(3,5,-24);
+        var light04 = setPointLight(3,5,-30);
+        var light05 = setPointLight(3,5,-40);
+        var light06 = setPointLight(3,5,-48);
+        var light07 = setPointLight(3,5,-54);
+        var light08 = setPointLight(3,5,-60);
+        var light09 = setPointLight(3,5,-66);
+
+        var light10 = setPointLight(3,-35,-13);
+        var light11 = setPointLight(3,-35,-18);
+        var light12 = setPointLight(3,-35,-24);
+        var light13 = setPointLight(3,-35,-30);
+        var light14 = setPointLight(3,-35,-40);
+        var light15 = setPointLight(3,-35,-48);
+        var light16 = setPointLight(3,-35,-54);
+        var light17 = setPointLight(3,-35,-60);
+        var light18 = setPointLight(3,-35,-66);
+
+        var light19 = setPointLight(3,-6,5);
+        var light20 = setPointLight(3,-12,5);
+        var light21 = setPointLight(3,-18,5);
+        var light22 = setPointLight(3,-24,5);
+        
+        var light23 = setPointLight(3,-6,-75);
+        var light24 = setPointLight(3,-12,-75);
+        var light25 = setPointLight(3,-18,-75);
+        var light26 = setPointLight(3,-24,-75);
+
+        const lightt = new THREE.AmbientLight( 0x404040 ); // soft white light
+        scene.add( lightt );
+
+    </script>
+</body>
+</html>
+

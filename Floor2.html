@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="x-icon" href="images/icon.png">
+    <title>Second Floor</title>   <!--Name of the website -->
+    <link rel="stylesheet" href="style.css"/>   <!--Linking the css file-->
+</head>
+<body>
+    <script src="./js/three.js"></script>            <!-- Importing the three.js library-->
+    <script src="./js/jquery.js"></script>           <!-- Importing the jquery.js library-->
+    <script src="./js/threex.domevents.js"></script> <!-- Importing the threex.domevents.js library-->
+    <script src="./js/GLTFLoader.js"></script>       <!-- Importing the GLTFLoader.js library-->
+    <div id="glass" class="glass" onmouseover="nowin()" onmouseleave="nowout()"></div>
+    <img src="images/logo.png">
+    <div class="controlLayoutColoured"></div>    <!--This is an invisible layout which used to sense mouse activities on the label-->
+    <div id="information" class="information_class" >                    
+        <div id ="main_information" class="main_information_class">                         <!--Top right main information label-->
+            <div id="label" class="label1_class">Room Name</div>
+            <ul id="list" class="list_class" style="list-style-image: url(images/bullet2.png); font-size: 2.15vmin;">                                   <!--Top right main information list-->
+                <li>list item 1</li>
+                <li>list item 2</li>
+                <li>list item 3</li>
+            </ul>
+        </div>
+        <div id="hint" class="hint_class">Click on the blue panel for more details</div>
+        <div id="more_information" class="more_information_class">                          <!--Top right more information label-->
+            <p2 id="label2" class="label2_class">More information here</p2>          
+            <ul id="list2" class="list2_class" style="list-style-image: url(images/bullet2.png);">                                             <!--Top right more information list-->
+                <li>list item 1</li>
+                <li>list item 2</li>
+                <li>list item 3</li>
+            </ul>
+            <div class="line"></div>
+        </div>
+    </div>
+    
+    <div id="latterPanel" class="latterPanelClass">
+        <div id="link" class="link_class">
+            <div id="linkHead" class="linkHead_class">Link</div>
+            <div class="url_class">
+                <a href="http://www.ce.pdn.ac.lk/" id="url" target="_blank">Click here for more info</a>
+            </div>
+            
+        </div>
+        <div id ="navigator" class="navigate_class">                         <!--Top right main information label-->
+            <div id="searchBar" class="searchBar">
+                <input id="searchQueryInput" class="searchQueryInput_class" type="text" name="searchQueryInput" placeholder="Search" value="" />
+                <button id="searchQuerydelete" class="searchQuerydelete_class" type="submit" name="searchQuerydelete" onclick="deleteInput()">
+                    <svg width="3vmin" height="3vmin" viewBox="0 0 24 24">
+                        <path fill="#1A5276" d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z" fill="currentColor"/>
+                    </svg>
+                </button>
+                <button id="searchQuerySubmit" class="searchQuerySubmit_class" type="submit" name="searchQuerySubmit" onclick="findData()">
+                  <svg style="width:3.4vmin;height:3.4vmin" viewBox="0 0 24 24"><path fill="#666666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                  </svg>
+                </button>
+            </div>
+            <div id="roomListContainer" class="roomListContainer_class">
+                <div id="roomList" class="roomList_class">
+                    <div id="navigatingItem1" class="items" onclick="showPath(0)">Technical Offcer's room</div>
+                    <div id="navigatingItem2" class="items" onclick="showPath(1)">Insructors' Room</div>
+                    <div id="navigatingItem3" class="items" onclick="showPath(2)">Industrial Automation Lab</div>
+                    <div id="navigatingItem4" class="items" onclick="showPath(3)">Discussion Room</div>
+                    <div id="navigatingItem5" class="items" onclick="showPath(4)">Lecturer's Room 1</div>
+                    <div id="navigatingItem6" class="items" onclick="showPath(5)">Lecturer's Room 2</div>
+                    <div id="navigatingItem7" class="items" onclick="showPath(6)">Lecturer's Room 3</div>
+                    <div id="navigatingItem8" class="items" onclick="showPath(7)">Lecturer's Room 4</div>
+                    <div id="navigatingItem9" class="items" onclick="showPath(8)">Main room</div>
+                    <div id="navigatingItem10" class="items" onclick="showPath(9)">Lift</div>
+                    <div id="navigatingItem11" class="items" onclick="showPath(10)">Corridor</div>
+                    <div id="navigatingItem12" class="items" onclick="showPath(11)">Operator-room</div>
+                    <div id="navigatingItem13" class="items" onclick="showPath(12)">Hardware & Computer Interfacing Lab</div>
+                </div>
+            </div>
+        </div>
+        <div style="font-size: 2.4vmin;" id="label3" class="label3_class">Navigator</div>
+    </div>
+    <div id="controlLayout" class="controlLayout_class" onmouseover="showInformation()" onmouseout="hideInformation()"></div>    <!--This is an invisible layout which used to sense mouse activities on the label-->
+    <div id="dashboard" class="dashboard_class">
+        <button class="changeCorners_class" id="changeCorners" onclick="changeCorners()">Square Corners</button>
+        <button id="buttonControlswitch" class="buttonControlswitch_class" onclick="activeButtons()">
+            <svg width="2.8vmin" height="2.8vmin" viewBox="1 2 22 18" fill="none">
+                <path d="M16.9451 5.05518C15.8405 5.05518 14.9451 5.95061 14.9451 7.05518C14.9451 8.15975 15.8405 9.05518 16.9451 9.05518C18.0496 9.05518 18.9451 8.15975 18.9451 7.05518C18.9451 5.95061 18.0496 5.05518 16.9451 5.05518Z" fill="currentColor"/>
+                <path d="M14.9451 16.8921C14.9451 15.7875 15.8405 14.8921 16.9451 14.8921C18.0496 14.8921 18.9451 15.7875 18.9451 16.8921C18.9451 17.9967 18.0496 18.8921 16.9451 18.8921C15.8405 18.8921 14.9451 17.9967 14.9451 16.8921Z" fill="currentColor"/>
+                <path d="M7.05518 14.8921C5.95061 14.8921 5.05518 15.7875 5.05518 16.8921C5.05518 17.9967 5.95061 18.8921 7.05518 18.8921C8.15975 18.8921 9.05518 17.9967 9.05518 16.8921C9.05518 15.7875 8.15975 14.8921 7.05518 14.8921Z" fill="currentColor"/>
+                <path d="M5.05518 7.05518C5.05518 5.95061 5.95061 5.05518 7.05518 5.05518C8.15975 5.05518 9.05518 5.95061 9.05518 7.05518C9.05518 8.15975 8.15975 9.05518 7.05518 9.05518C5.95061 9.05518 5.05518 8.15975 5.05518 7.05518Z" fill="currentColor"/>
+                <path d="M16.9451 9.97363C15.8405 9.97363 14.9451 10.8691 14.9451 11.9736C14.9451 13.0782 15.8405 13.9736 16.9451 13.9736C18.0496 13.9736 18.9451 13.0782 18.9451 11.9736C18.9451 10.8691 18.0496 9.97363 16.9451 9.97363Z" fill="currentColor"/>
+                <path d="M5.05518 11.9736C5.05518 10.8691 5.95061 9.97363 7.05518 9.97363C8.15975 9.97363 9.05518 10.8691 9.05518 11.9736C9.05518 13.0782 8.15975 13.9736 7.05518 13.9736C5.95061 13.9736 5.05518 13.0782 5.05518 11.9736Z" fill="currentColor"/></svg>
+            </button>
+        <button id="contactus_button" class="contactus_button_class" onclick="showDetails()">
+            <svg width="2.2vmin" height="2.2vmin" viewBox="1 2 22 18" fill="none"><path d="M2 10V5C2 4.44775 2.44772 4 3 4H8C8.55228 4 9 4.44775 9 5V9C9 9.55225 8.55228 10 8 10H6C6 14.4182 9.58173 18 14 18V16C14 15.4478 14.4477 15 15 15H19C19.5523 15 20 15.4478 20 16V21C20 21.5522 19.5523 22 19 22H14C7.37259 22 2 16.6274 2 10Z" fill="currentColor"/></svg>
+        </button>
+        <button id="assets" class="assets_class" onclick="ImportAssets('https\:\/\/raw.githubusercontent.com/cepdnaclk/e18-co227-Interactive-Department-Map-GroupA/main/assets/F2_Assets.gltf',-5,0,-10,Math.PI,3.28084)">ASSETS</button>
+        <div id="otherpages" class="otherpages_class">
+            <div style="font-size: 1.2vmin; color:white; padding-left: 0.8vmin; padding-right: 0; width: 17%; margin-top: 1.2vmin;">FLOOR</div>
+            <button id="page" class="pagebutton_class" style="border: none;" onclick="redirecttoPage(0)">G</button>
+            <button id="page" class="pagebutton_class" style="border: none;" onclick="redirecttoPage(1)">1</button>
+            <button id="page" class="pagebutton_class">2</button>
+            <button id="page" class="pagebutton_class" style="border: none;" onclick="redirecttoPage(3)">3</button>
+            <button id="page" class="pagebutton_class" style="border: none;" onclick="redirecttoPage(4)">4</button>
+        </div>
+        <div class="viewsButtonClass" id="viewsButton">
+            <button class="leftTopButtonClass" id="leftTopButton" onclick="leftTop()">BIRD</button>
+            <button class="leftBottomButtonClass" id="leftBottomButton" onclick="leftBottom()">DRONE</button>
+            <button class="RightButtonClass" id="RightButton"><p3 id="rightTop" class="rightTopClass">W</p3><br><p4 id="rightBottom" class="rightBottomClass">WALK</p4></button>
+        </div>
+    </div>
+    <button id="left" class="left_class" onclick="buttonControls(1)">LEFT</button>
+    <button id="right" class="right_class" onclick="buttonControls(2)">RIGHT</button>
+    <button id="up" class="up_class" onclick="buttonControls(3)">UP</button>
+    <button id="down" class="down_class" onclick="buttonControls(4)">DOWN</button>
+    <button id="front" class="front_class" onclick="buttonControls(5)">FRONT</button>
+    <button id="back" class="back_class" onclick="buttonControls(6)">BACK</button>
+    <div id="aim" class="aim"></div>
+    <div id="glass1" class="glass" style="opacity: 0.6; display:flex;"></div>
+    <div id="waiting" class="waiting_class"><strong>Loading...</strong></div>
+    <div id="contactus" class="contactus_class">
+        <div style="color: #239B56; font-size: 4vmin; padding-left: 3vmin; padding-top: 2vmin;"><strong>Contact us</strong></div>
+        <div id="contactus_close" class="contactus_close_class" name="contactus_close" color="#28B463" onclick="hideDetails()">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+                <path fill="#1A5276" d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z" fill="currentColor"/>
+            </svg>
+        </div>
+        <div id="name1" class="name1_class" style="display: flex;" onclick="redirecttoAccount(1)"><svg width="6vmin" height="5.5vmin" viewBox="3 3 20 20"><path fill-rule="evenodd" clip-rule="evenodd"d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z" fill="#117A65"/>
+        </svg><div><div class="name">MR. NUWAN JALIYAGODA</div><div class="mail">nuwanjaliyagoda@eng.pdn.ac.lk</div></div></div>
+        <div id="name1" class="name2_class" style="display: flex;" onclick="redirecttoAccount(2)"><svg width="6vmin" height="5.5vmin" viewBox="3 3 20 20"><path fill-rule="evenodd" clip-rule="evenodd"d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z" fill="#117A65"/>
+        </svg><div><div class="name">MS. PIYUMALI SANDUNIKA</div><div class="mail">e18318@eng.pdn.ac.lk</div></div></div>
+        <div id="name1" class="name3_class" style="display: flex;" onclick="redirecttoAccount(3)"><svg width="6vmin" height="5.5vmin" viewBox="3 3 20 20"><path fill-rule="evenodd" clip-rule="evenodd"d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z" fill="#117A65"/>
+        </svg><div><div class="name">MR. CHAMARA DILSHAN</div><div class="mail">e18327@eng.pdn.ac.lk</div></div></div>
+        <div id="name1" class="name4_class" style="display: flex;" onclick="redirecttoAccount(4)"><svg width="6vmin" height="5.5vmin" viewBox="3 3 20 20"><path fill-rule="evenodd" clip-rule="evenodd"d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z" fill="#117A65"/>
+        </svg><div><div class="name">MR. RUCHIRA THARAKA</div><div class="mail">e18354@eng.pdn.ac.lk</div></div></div>
+    </div>
+    <script type="text/javascript">
+       
+//Database
+        //This database is used to load the information about the buildings
+        var my_json={};   
+        loadBuildings();
+    
+        function loadBuildings(){     
+		
+            var xhr = new XMLHttpRequest();		//create XHR object
+            xhr.open('GET','json/F2data.json',true);
+
+            xhr.onload = function(){
+                if(this.status==200){       
+                    my_json = JSON.parse(this.responseText);   //added wrapper such that values of the objects can be accessed
+                        //console.log(my_json);		
+                        roomInfo(defaultID);       			//Set initial information should be appeared in the panels
+                        animate();
+                        checkURL();
+                }
+                else{
+                    alert("File not found..!! Check the database file name or URL and try again !! ");	//when there's an error in accessing the json file
+                }
+            }
+            xhr.onerror = function(){
+                console.log('Request Error occured!!');			//when there's an issue with the network level
+            }
+            xhr.send();
+        }
+
+
+        var clicked = 0;                //To check whether a building has been clicked or not
+        var expanding = 0;              //To check if top right labels are expanding or not
+        var expanded = 0;               //To check whether top right main label has been expanded or not
+        var circleCorners = 1;          //To flag whether layouts have circle corners or square corners (circle(1)-default)
+        var out = 1;                    //To check whether mouse pointer is on threejs scene or on the panel
+        var X = 0.52,Y=0.7,R=0.9,S=0.08;    //X- length of front,back boxes, Y- thickness of transparent walls,R- gap between camera and front/back boxes,  
+        var initialCamera_X = 0, initialCamera_Y = -3, initialCamera_Z = -54.6;     //Coordinates of the camera at the initial point
+        var initialBirdY=-20,initialBirdZ=-45;          ////Coordinates of the camera at the initial point in the bird view
+        var initialCamera_Xangle = -Math.PI/2;          //Rotation of the camera around x axis at the initial point
+        var yR = R, zR = 0;         //The gap between front,back boxes along y and z axes
+        var angle_x= initialCamera_Xangle, angle_y=0;                //Starting rotation values of the camera
+        var idNUM = 14;     //Number of ids
+        var doorHeight=-1.72, panelHeight = 3.85, wallHeight=-0.7, barHeight=-4.95;     //Height of the doors,panels,walls and the bars should be set
+        var barNUM = 19;    //Number of navigating bars
+        var defaultID=9;    //This is the id of the default information should be shown
+        var activebuttons = 0;      //This indicates whether button controls are active or not
+
+
+        //Navigating bars, ids and the names of the rooms
+        var buildingIDList = [["Technical Offcer's room",1,[1,2,3,4,18,6,8]],["Insructors' Room",2,[1,2,3,9]],["Industrial Automation Lab",3,[1,2,3,9,10]],["Discussion Room",4,[1,2,3,11]],["Lecturer's Room 1",5,[1,2,3,11,12]],["Lecturer's Room 2",6,[1,2,3,11,13,14]],["Lecturer's Room 3",7,[1,2,3,11,13,15,16]],["Lecturer's Room 4",8,[1,2,3,11,13,15,17]],["Main room",9,[1]],["Lift",10,[1,0]],["Corridor",11,[1,2,3,4]],["Operator-room",12,[1,2,3,4,18,6,7]],["Hardware & Computer Interfacing Lab",13,[1,2,3,4,18,5]]];
+        //List of navigating items in the navigating panel
+        var navigatingItemList = ["navigatingItem1","navigatingItem2","navigatingItem3","navigatingItem4","navigatingItem5","navigatingItem6","navigatingItem7","navigatingItem8","navigatingItem9","navigatingItem10","navigatingItem11","navigatingItem12","navigatingItem13"];
+
+    </script>
+    <script src="commonContent.js"></script>
+    <script type="text/javascript"> 
+
+        //Importing the blender object using the created function above
+        // var blenderBuilding = importObject('./floors/Floor2.gltf',-5,0,-10,Math.PI,3.28084);
+        var blenderBuilding = importObject('https://raw.githubusercontent.com/cepdnaclk/e18-co227-Interactive-Department-Map-GroupA/main/floors/Floor2.gltf',-5,0,-10,Math.PI,3.28084);    
+
+        //Creating transparent doors using the created function above
+        var S01_door1 = createTransparentObject(1,"h",-8.45,-68.41); //a
+
+        var S02_door1 = createTransparentObject(2,"v",-10.5,-54.57); //b
+        var S02_door2 = createTransparentObject(2,"h",-18.02,-40.2); //c
+        var S02_door3 = createTransparentObject(2,"v",-20.8,-54); //d
+
+        var S03_door1 = createTransparentObject(3,"v",-20.58,-54); //d
+        
+        var S04_door1 = createTransparentObject(4,"v",-20.8,-11.85); //e
+        var S04_door2 = createTransparentObject(4,"v",-20.8,-23.25); //f
+        var S04_door3 = createTransparentObject(4,"v",-20.8,-27.4); //g
+        var S04_door4 = createTransparentObject(4,"v",-20.8,-36.37); //h
+        var S04_door5 = createTransparentObject(4,"h",-18.02,-40.42); //c
+        var S04_door6 = createTransparentObject(4,"h",-8.5,-40.42); //i
+
+        var S05_door1 = createTransparentObject(5,"v",-20.58,-36.37); //h
+        
+        var S06_door1 = createTransparentObject(6,"v",-20.58,-27.4); //g
+        
+        var S07_door1 = createTransparentObject(7,"v",-20.58,-23.25); //f
+        
+        var S08_door1 = createTransparentObject(8,"v",-20.58,-11.85); //e
+
+        var S09_door1 = createTransparentObject(9,"h",-8.5,-40.2); //i
+        var S09_door2 = createTransparentObject(9,"v",-10.72,-54.57); //b
+        var S09_door3 = createTransparentObject(9,"hss2",-8.15,-58.53); //z
+        var S09_door4 = createTransparentObject(9,"hl",-2.86,-59); //l has to create the other one (inside the lift)
+
+        var S10_door1 = createTransparentObject(10,"hl",-2.86,-58.799); //l
+
+        var S11_door1 = createTransparentObject(11,"vs",-4.84,-67.25); //j
+        var S11_door3 = createTransparentObject(11,"hss2",-8.15,-58.47); //z
+        var S11_door3 = createTransparentObject(11,"vs",-10.35,-64.25); //k
+        var S11_door4 = createTransparentObject(11,"h",-8.45,-68.63); //a
+
+        var S12_door1 = createTransparentObject(12,"vs",-4.96,-67.25); //j
+        
+        var S13_door1 = createTransparentObject(13,"vs",-10.35,-64.25); //k
+
+        //Creating transparent panels using the created function above
+        var PanelsList = [];
+        var idsOfPanelList = [];
+
+        var panel01_1BB = createTransparentPanel(1,10.35,11.15,-5.175,-74.425);     PanelsList.push(panel01_1BB);
+
+        var panel02_1BB = createTransparentPanel(2,9.4,16,-15.7,-48.6);             PanelsList.push(panel02_1BB);
+        
+        var panel03_1BB = createTransparentPanel(3,10,16,-26,-48.6);                PanelsList.push(panel03_1BB);
+
+        var panel04_1BB = createTransparentPanel(4,20.4,30,-10.2,-25);              PanelsList.push(panel04_1BB);  
+
+        var panel05_1BB = createTransparentPanel(5,10,6.85,-26,-36.57);             PanelsList.push(panel05_1BB);
+
+        var panel06_1BB = createTransparentPanel(6,10,6.85,-26,-29.08);             PanelsList.push(panel06_1BB);
+
+        var panel07_1BB = createTransparentPanel(7,10,6.85,-26,-21.58);             PanelsList.push(panel07_1BB);
+
+        var panel08_1BB = createTransparentPanel(8,10,7.48,-26,-13.75);             PanelsList.push(panel08_1BB);
+        
+        var panel09_1BB = createTransparentPanel(9,10.4,18,-5.2,-49.6);             PanelsList.push(panel09_1BB);
+
+        var panel10_1BB = createTransparentPanel(10,5.3,5.76,-2.65,-62.12);         PanelsList.push(panel10_1BB);
+    
+        var panel11_1BB = createTransparentPanel(11,0.96,3.2,-5.44,-67.2);          PanelsList.push(panel11_1BB);
+        var panel11_2BB = createTransparentPanel(11,4.43,10.1,-8.13,-63.75);        PanelsList.push(panel11_2BB);
+
+        var panel12_1BB = createTransparentPanel(12,4.9,3.2,-2.45,-67.2);           PanelsList.push(panel12_1BB);
+        
+        var panel13_1BB = createTransparentPanel(13,20.6,21.4,-20.7,-69.3);         PanelsList.push(panel13_1BB);
+        var panel13_2BB = createTransparentPanel(13,20,1.35,-21,-57.925);           PanelsList.push(panel13_2BB);
+
+        //Creating transparent walls using the created function above
+        var transparentWallsList = [];
+
+        var cubeV1BB = createWall(Y,70,0.3,-45);            transparentWallsList.push(cubeV1BB);
+        var cubeV2BB = createWall(Y,70,-31.3,-45);          transparentWallsList.push(cubeV2BB);
+        var cubeV3BB = createWall(Y,7.4,-5.6,-62.1);        transparentWallsList.push(cubeV3BB);
+        var cubeV4BB = createWall(Y,12.8,-10.6,-46.5);      transparentWallsList.push(cubeV4BB);
+        var cubeV5BB = createWall(Y,2.4,-10.6,-57.4);       transparentWallsList.push(cubeV5BB);
+        var cubeV6BB = createWall(Y,4.2,-10.4,-60.7);       transparentWallsList.push(cubeV6BB);
+        var cubeV7BB = createWall(Y,14.6,-10.4,-73);        transparentWallsList.push(cubeV7BB);
+        var cubeV8BB = createWall(Y,1.7,-20.7,-56.44);      transparentWallsList.push(cubeV8BB);
+        var cubeV9BB = createWall(Y,14.4,-20.7,-45.2);      transparentWallsList.push(cubeV9BB);
+        var cubeV10BB = createWall(Y,5.7,-20.7,-31.85);     transparentWallsList.push(cubeV10BB);
+        var cubeV11BB = createWall(Y,1,-20.7,-25.35);       transparentWallsList.push(cubeV11BB);
+        var cubeV12BB = createWall(Y,8.1,-20.7,-17.55);     transparentWallsList.push(cubeV12BB);
+        var cubeV13BB = createWall(Y,0.6,-20.7,-10);        transparentWallsList.push(cubeV13BB);
+        var cubeV14BB = createWall(Y,9,-3,-48);             transparentWallsList.push(cubeV14BB);
+        var cubeV15BB = createWall(0.4,7,-6.3,-44);         transparentWallsList.push(cubeV15BB);
+
+        var cubeH1BB = createWall(32.3,Y,-15.5,-9.7);       transparentWallsList.push(cubeH1BB);
+        var cubeH2BB = createWall(32.3,Y,-15.5,-80.3);      transparentWallsList.push(cubeH2BB);
+        var cubeH3BB = createWall(7.1,Y,-3.45,-68.9);       transparentWallsList.push(cubeH3BB);
+        var cubeH4BB = createWall(5.4,Y,-2.6,-65.3);        transparentWallsList.push(cubeH4BB);
+        var cubeH5BB = createWall(1.1,Y,-0.6,-58.9);        transparentWallsList.push(cubeH5BB);
+        var cubeH6BB = createWall(2.7,Y,-5.9,-58.7);        transparentWallsList.push(cubeH6BB);
+        var cubeH7BB = createWall(1.8,Y,-10.05,-58.7);      transparentWallsList.push(cubeH7BB);
+        var cubeH8BB = createWall(20.5,Y,-21,-56.9);        transparentWallsList.push(cubeH8BB);
+        var cubeH9BB = createWall(11,Y,-25.55,-40.35);      transparentWallsList.push(cubeH9BB);
+        var cubeH10BB = createWall(10,Y,-26,-32.85);        transparentWallsList.push(cubeH10BB);
+        var cubeH11BB = createWall(10,Y,-26,-25.3);         transparentWallsList.push(cubeH11BB);
+        var cubeH12BB = createWall(10,Y,-26,-17.8);         transparentWallsList.push(cubeH12BB);
+        var cubeH13BB = createWall(6.15,Y,-13.2,-40.35);    transparentWallsList.push(cubeH13BB);
+        var cubeH14BB = createWall(7,Y,-3.38,-40.35);       transparentWallsList.push(cubeH14BB);
+        var cubeH15BB = createWall(3.3,Y,-1.7,-52.5);       transparentWallsList.push(cubeH15BB);
+        var cubeH16BB = createWall(3,Y,-5,-46);             transparentWallsList.push(cubeH16BB);
+           
+        //Creating navigating bars using the created function above
+        var bar0 = createNavigatingBars(0,"v",5,-3,-57.35);
+        var bar1 = createNavigatingBars(1,"v",0.5,-3,-54.6);
+        var bar2 = createNavigatingBars(2,"h",4.7,-5.6,-54.6);
+        var bar3 = createNavigatingBars(3,"v",0.5,-8.2,-54.6);
+        var bar4 = createNavigatingBars(4,"v",5.5,-8.2,-57.6);
+        var bar19 = createNavigatingBars(18,"v",4.1,-8.2,-62.4);
+        var bar5 = createNavigatingBars(5,"h",3,-9.95,-64.2);
+        var bar6 = createNavigatingBars(6,"v",3,-8.2,-65.95);
+        var bar7 = createNavigatingBars(7,"h",4,-5.95,-67.2);
+        var bar8 = createNavigatingBars(8,"v",2.5,-8.2,-68.7);
+        var bar9 = createNavigatingBars(9,"h",4,-10.45,-54.6);
+        var bar10 = createNavigatingBars(10,"h",10,-16.95,-54.1);
+        var bar11 = createNavigatingBars(11,"v",18.3,-8.2,-45.2);
+        var bar12 = createNavigatingBars(12,"h",13.5,-15.2,-36.3);
+        var bar13 = createNavigatingBars(13,"v",9,-8.2,-31.55);
+        var bar14 = createNavigatingBars(14,"h",13.5,-15.2,-27.3);
+        var bar15 = createNavigatingBars(15,"v",4,-8.2,-25.05);
+        var bar16 = createNavigatingBars(16,"h",13.5,-15.2,-23.3);
+        var bar17 = createNavigatingBars(17,"v",11.5,-8.2,-17.3);
+        var bar18 = createNavigatingBars(17,"h",13.5,-15.2,-11.8);
+
+        //Set lights by using the created function above
+        var light09 = setPointLight(3,5,-5);
+        var light01 = setPointLight(3,5,-10);
+        var light02 = setPointLight(3,5,-20);
+        var light03 = setPointLight(3,5,-30);
+        var light04 = setPointLight(3,5,-40);
+        var light05 = setPointLight(3,5,-50);
+        var light06 = setPointLight(3,5,-60);
+        var light07 = setPointLight(3,5,-66);
+        var light08 = setPointLight(3,5,-72);
+        var light09 = setPointLight(3,5,-78);
+
+        var light10 = setPointLight(3,-35,-5);
+        var light10 = setPointLight(3,-35,-10);
+        var light11 = setPointLight(3,-35,-20);
+        var light12 = setPointLight(3,-35,-30);
+        var light13 = setPointLight(3,-35,-40);
+        var light14 = setPointLight(3,-35,-50);
+        var light15 = setPointLight(3,-35,-60);
+        var light16 = setPointLight(3,-35,-66);
+        var light17 = setPointLight(3,-35,-72);
+        var light18 = setPointLight(3,-35,-78);
+
+        var light19 = setPointLight(3,-6,0);
+        var light23 = setPointLight(3,-6,-26);
+    
+        var light20 = setPointLight(3,-3,-85);
+        var light21 = setPointLight(3,-8,-85);
+        var light22 = setPointLight(3,-20,-85);
+
+        const lightt = new THREE.AmbientLight( 0x404040 ); // soft white light
+        scene.add( lightt );
+
+    </script>
+
+</body>
+</html>
+
